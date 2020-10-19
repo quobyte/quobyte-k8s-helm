@@ -41,6 +41,8 @@ spec:
             value: "7860" 
           - name: QUOBYTE_SERVICE
             value: webconsole
+          - name: QUOBYTE_WEBCONSOLE_PORT
+            value: "{{ .Values.quobyte.webconsoleport }}"
           - name: CLOUD_INSTALL
             value: "1" 
           - name: CLUSTER_NS

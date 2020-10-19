@@ -81,6 +81,7 @@ quobyte:
     domain: s3.example.com
   
   # DO NOT EDIT OPTIONS BELOW THIS LINE
+  webconsoleport: 8080
   image: gcr.io/eda-eval/quobyte-server:3.0.pre7
   # Maximum number of open file descriptors per container,
   # must be set to 999,999 or more.
