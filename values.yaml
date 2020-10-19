@@ -13,20 +13,7 @@ quobyte-client:
   clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre7
   clientVersion: 3
   quobyte:
-    ##clientMountPoint: /home/quobyte
     clientMountPoint: /home/quobyte/mounts
-
-# configure Quobyte cluster
-#quobyte-core:
-#  quobyte:
-#    flashStorage: pd-ssd
-#    storageProvisioner: kubernetes.io/gce-pd
-#    image: gcr.io/eda-eval/quobyte-server:3.0.pre7
-#    replicas: 4
-#    quobyteTenant: "My Tenant"
-#    quobyteUser: YWRtaW4=
-#    quobytePassword: cXVvYnl0ZQ==
-
 
 # configure quobyte-csi sub chart:
 quobyte-csi:
@@ -50,7 +37,6 @@ quobyte-csi:
 
 # todo:
 # - think about quobyte-api-url
-# - Volume sizes for any used volumes
 # - target port webconsole
 # - prometheus port
 # - make webconsole failovering, not hardcoded to quobyte-0
