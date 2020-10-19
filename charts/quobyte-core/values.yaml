@@ -1,5 +1,5 @@
 # Define the node pool you want to deploy to
-nodepoolname: pool-1
+nodepoolname: default-pool
 # If you want to update an external DNS with Quobyte registry names and ip addresses
 # then enable this
 externaldns:
@@ -33,6 +33,10 @@ quobyte:
   # This is necessary for the Java VM - don't touch
   maxprocs: "16384"
   image: gcr.io/eda-eval/quobyte-server:3.0.pre7
+  metadatadisks:
+    - name: metadata0
+      mountpoint: /var/lib/quobyte/devices/metadata0
+      size: "100Gi"
   # Disks names and basename parts have to start with data
   # Define the number of disks you want to use per data service
   # The size of 840Gi is the bare minimum to get best performance on GKE
