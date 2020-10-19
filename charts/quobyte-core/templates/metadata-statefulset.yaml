@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: quobyte-meta
+spec:
+  selector:
+    matchLabels:
+      app: quobyte-meta # has to match .spec.template.metadata.labels
+  serviceName: "quobyte-meta"
+  replicas: {{ .Values.quobyte.replicas }} # by default is 4 
+  template:
+    metadata:
+      labels:
+        app: quobyte-meta # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: quobyte
+        image: {{ .Values.quobyte.image }}
+        imagePullPolicy: Always
+        env:
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: QUOBYTE_DATA_PORT 
+            value: "7863"
+          - name: QUOBYTE_META_PORT
+            value: "7862"
+          - name: QUOBYTE_REG_PORT 
+            value: "7861"
+          - name: QUOBYTE_API_PORT
+            value: "7860" 
+          - name: QUOBYTE_SERVICE
+            value: metadata
+          - name: CLUSTER_NS
+            value: {{ .Release.Namespace }}
+          - name: LIMIT_OPEN_FILES
+            value: "{{ .Values.quobyte.maxopenfiles }}"
+          - name: LIMIT_MAX_PROCESSES
+            value: "{{ .Values.quobyte.maxprocs }}"
+        ports:
+        - containerPort: 7862
+          name: quobyte-meta
+        volumeMounts:
+          - name: config
+            mountPath: /etc/quobyte
+          - name: metadata
+            mountPath: /var/lib/quobyte/devices/metadata
+      nodeSelector:
+           cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
+      affinity:
+        podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - quobyte
+              topologyKey: "kubernetes.io/hostname"
+  volumeClaimTemplates:
+  - metadata:
+      name: config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: metadata
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "faster"
+      resources:
+        requests:
+          storage: 100Gi
+

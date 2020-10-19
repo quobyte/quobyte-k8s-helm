@@ -1,0 +1,15 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+To login to your new Quobyte web console get the public endpoint:
+
+  $ kubectl get svc quobyte-webconsole 
+
+Paste this IP-address + port 8080 into your web browser and login 
+using the defined credentials.

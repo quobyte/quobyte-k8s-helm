@@ -1,0 +1,7 @@
+quobyteTenant: "My Tenant"
+clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre7
+clientVersion: 3
+quobyteUser: YWRtaW4=
+quobytePassword: cXVvYnl0ZQ==
+quobyte:
+  clientMountPoint: /home/quobyte/mounts

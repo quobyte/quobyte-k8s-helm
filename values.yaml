@@ -1,0 +1,62 @@
+# Decides if csi framework and quobyte driver should be deployed using this chart
+csi_enabled: true
+
+# decides if quobyte clients should be deployed using this chart
+client_enabled: true
+
+# decides if quobyte core services (metadata, registry, dataservice, quobyte-api, web-console
+# shall be deployed using this chart.
+core_enabled: true
+
+# configure Quobyte clients
+quobyte-client:
+  clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre7
+  clientVersion: 3
+  quobyte:
+    ##clientMountPoint: /home/quobyte
+    clientMountPoint: /home/quobyte/mounts
+
+# configure Quobyte cluster
+#quobyte-core:
+#  quobyte:
+#    flashStorage: pd-ssd
+#    storageProvisioner: kubernetes.io/gce-pd
+#    image: gcr.io/eda-eval/quobyte-server:3.0.pre7
+#    replicas: 4
+#    quobyteTenant: "My Tenant"
+#    quobyteUser: YWRtaW4=
+#    quobytePassword: cXVvYnl0ZQ==
+
+
+# configure quobyte-csi sub chart:
+quobyte-csi:
+  quobyte:
+    apiURL: http://quobyte-api.default.svc.cluster.local:7860 # this works for intra cluster communication
+    clientMountPoint: /home/quobyte
+    csiProvisionerName: csi.quobyte.com
+    dev:
+      csiImage: quay.io/quobyte/csi:v1.4.0
+      csiProvisionerVersion: v1.4.0
+      k8sAttacher: quay.io/k8scsi/csi-attacher:v2.2.0
+      k8sClusterDriverRegistrarImage: quay.io/k8scsi/csi-cluster-driver-registrar:v1.0.1
+      k8sNodeRegistrarImage: quay.io/k8scsi/csi-node-driver-registrar:v1.3.0
+      k8sProvisionerImage: quay.io/k8scsi/csi-provisioner:v1.6.0
+      k8sResizerImage: quay.io/k8scsi/csi-resizer:v0.5.0
+      k8sSnapshotter: quay.io/k8scsi/csi-snapshotter:v2.1.1
+    enableAccessKeys: false
+    enableSnapshots: false
+    podSecurityPolicies: false
+    useK8SNamespaceAsTenant: false
+
+# todo:
+# - think about quobyte-api-url
+# - Volume sizes for any used volumes
+# - target port webconsole
+# - prometheus port
+# - make webconsole failovering, not hardcoded to quobyte-0
+# - make csi part variable
+# - think about namespaces (because of the quobyte admin secret)
+# - make tenant configurable
+# - make first time user (admin/quobyte) configurable
+# v integrate csi chart as sub chart
+# - make registry url a variable for eassier client configuration

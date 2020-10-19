@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: quobyte-reg
+spec:
+  selector:
+    matchLabels:
+      app: quobyte-reg # has to match .spec.template.metadata.labels
+  serviceName: "quobyte"
+  replicas: {{ .Values.quobyte.replicas }} # by default is 4 
+  template:
+    metadata:
+      labels:
+        app: quobyte-reg # has to match .spec.selector.matchLabels
+    spec:
+      subdomain: "quobyte"
+      terminationGracePeriodSeconds: 10
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+#      initContainers:
+#      - name: quobyte-reg-pre 
+#        image: busybox 
+#        command:
+#              - /bin/sh 
+#              - -xec
+#              - |
+#                success=1
+#                until [[ $success -eq 0 ]]; do
+#                   for i in $(seq 0 3); do
+#                      success=0
+#                      return=$(ping -c 1 quobyte-reg-${i}.quobyte.default.svc.cluster.local  || echo 1)
+#                      echo $return
+#                      if [[ "$return" -eq "1" ]]; then
+#                        success=1
+#                      fi
+#                      sleep 0.5
+#                   done
+#                done
+      containers:
+      - name: quobyte-reg
+        image: {{ .Values.quobyte.image }}
+        imagePullPolicy: Always
+        env:
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: QUOBYTE_DATA_PORT 
+            value: "7863"
+          - name: QUOBYTE_META_PORT
+            value: "7862"
+          - name: QUOBYTE_REG_PORT 
+            value: "7861"
+          - name: QUOBYTE_API_PORT
+            value: "7860" 
+          - name: QUOBYTE_SERVICE
+            value: registry
+          - name: CLUSTER_NS
+            value: {{ .Release.Namespace }}
+          - name: LIMIT_OPEN_FILES
+            value: "{{ .Values.quobyte.maxopenfiles }}"
+          - name: LIMIT_MAX_PROCESSES
+            value: "{{ .Values.quobyte.maxprocs }}"
+        ports:
+        - containerPort: 7861
+          name: quobyte-reg
+        volumeMounts:
+          - name: config
+            mountPath: /etc/quobyte
+          - name: registry
+            mountPath: /var/lib/quobyte/devices/registry
+      nodeSelector:
+           cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
+      affinity:
+        podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - quobyte-reg
+              topologyKey: "kubernetes.io/hostname"
+  volumeClaimTemplates:
+  - metadata:
+      name: config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: registry
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "faster"
+      resources:
+        requests:
+          storage: 25Gi
+
