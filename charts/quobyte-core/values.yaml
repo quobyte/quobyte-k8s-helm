@@ -1,5 +1,5 @@
 # Define the node pool you want to deploy to
-nodepoolname: default-pool
+nodepoolname: pool-1
 # If you want to update an external DNS with Quobyte registry names and ip addresses
 # then enable this
 externaldns:
@@ -16,7 +16,7 @@ externaldns:
   annotation: quobyte.gce-test.quobyte.net.
 
 quobyte:
-  lbinteranl: true
+  lbinternal: true
   quobyteTenant: "My Tenant"
   quobyteUser: YWRtaW4=
   quobytePassword: cXVvYnl0ZQ==
