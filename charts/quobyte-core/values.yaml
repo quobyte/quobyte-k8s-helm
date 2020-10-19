@@ -1,5 +1,5 @@
 # Define the node pool you want to deploy to
-nodepoolname: default-pool
+nodepoolname: pool-1
 # If you want to update an external DNS with Quobyte registry names and ip addresses
 # then enable this
 externaldns:

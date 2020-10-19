@@ -41,6 +41,8 @@ spec:
             value: "7860" 
           - name: QUOBYTE_SERVICE
             value: webconsole
+          - name: CLOUD_INSTALL
+            value: "1" 
           - name: CLUSTER_NS
             value: {{ .Release.Namespace }}
           - name: LIMIT_OPEN_FILES
