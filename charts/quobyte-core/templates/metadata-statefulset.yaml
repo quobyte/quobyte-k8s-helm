@@ -38,6 +38,8 @@ spec:
             value: "7861"
           - name: QUOBYTE_API_PORT
             value: "7860" 
+          - name: CLOUD_INSTALL
+            value: "1" 
           - name: QUOBYTE_SERVICE
             value: metadata
           - name: CLUSTER_NS
@@ -52,8 +54,10 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /etc/quobyte
-          - name: metadata
-            mountPath: /var/lib/quobyte/devices/metadata
+          {{- range .Values.quobyte.metadatadisks }}
+          - name: {{ .name }}
+            mountPath: {{ .mountpoint }}
+          {{- end }}
       nodeSelector:
            cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
       affinity:
@@ -75,12 +79,13 @@ spec:
       resources:
         requests:
           storage: 10Gi
+{{- range .Values.quobyte.metadatadisks }}
   - metadata:
-      name: metadata
+      name: {{ .name }}
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "faster"
       resources:
         requests:
-          storage: 100Gi
-
+          storage: {{ .size }}
+{{- end }}

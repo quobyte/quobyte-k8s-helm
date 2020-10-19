@@ -41,7 +41,9 @@ spec:
             value: "7860" 
           - name: QUOBYTE_SERVICE
             value: s3
-          - name: S#_DOMAIN
+          - name: CLOUD_INSTALL
+            value: "1" 
+          - name: S3_DOMAIN
             value: "{{ .Values.s3.domain }}"
           - name: CLUSTER_NS
             value: {{ .Release.Namespace }}

@@ -38,6 +38,8 @@ spec:
             value: "7861"
           - name: QUOBYTE_API_PORT
             value: "7860" 
+          - name: CLOUD_INSTALL
+            value: "1" 
           - name: QUOBYTE_SERVICE
             value: api
           - name: CLUSTER_NS
