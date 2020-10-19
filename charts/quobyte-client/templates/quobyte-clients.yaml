@@ -15,11 +15,11 @@ spec:
         prometheus.io/port: '55000'
       labels:
         role: client
-        version: "{{ .Values.clientVersion }}"
+        version: "{{ .Values.quobyte.clientVersion }}"
     spec:
       containers:
       - name: quobyte-client-csi
-        image: {{ .Values.clientImage }} 
+        image: {{ .Values.quobyte.clientImage }} 
         imagePullPolicy: Always
         env:
           - name: QUOBYTE_CLIENT_LOG_LEVEL
