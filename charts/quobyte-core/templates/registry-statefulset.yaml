@@ -18,29 +18,9 @@ spec:
       terminationGracePeriodSeconds: 10
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-#      initContainers:
-#      - name: quobyte-reg-pre 
-#        image: busybox 
-#        command:
-#              - /bin/sh 
-#              - -xec
-#              - |
-#                success=1
-#                until [[ $success -eq 0 ]]; do
-#                   for i in $(seq 0 3); do
-#                      success=0
-#                      return=$(ping -c 1 quobyte-reg-${i}.quobyte.default.svc.cluster.local  || echo 1)
-#                      echo $return
-#                      if [[ "$return" -eq "1" ]]; then
-#                        success=1
-#                      fi
-#                      sleep 0.5
-#                   done
-#                done
-      containers:
-      - name: quobyte-reg
+      initContainers:
+      - name: quobyte-reg-pre 
         image: {{ .Values.quobyte.image }}
-        imagePullPolicy: Always
         env:
           - name: NODENAME
             valueFrom:
@@ -64,6 +44,62 @@ spec:
             value: "1" 
           - name: CLUSTER_NS
             value: {{ .Release.Namespace }}
+          - name: LIMIT_OPEN_FILES
+            value: "{{ .Values.quobyte.maxopenfiles }}"
+          - name: LIMIT_MAX_PROCESSES
+            value: "{{ .Values.quobyte.maxprocs }}"
+        volumeMounts:
+          - name: config
+            mountPath: /etc/quobyte
+          - name: registry
+            mountPath: /var/lib/quobyte/devices/registry
+        command:
+              - /bin/sh 
+              - -xec
+              - |
+                touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
+                echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/registry.cfg
+                NODENUM=$(echo "$NODENAME" | tr -dc "0-9")
+                if [ ! -e /var/lib/quobyte/devices/registry/QUOBYTE_DEVICE_SETUP ]; then
+                  if [[ $NODENUM == 0 ]]; then
+                    /usr/bin/qbootstrap -y -d /var/lib/quobyte/devices/registry
+                  else
+                    /usr/bin/qmkdev -d -t REGISTRY /var/lib/quobyte/devices/registry
+                  fi
+                fi
+      containers:
+      - name: quobyte-reg
+        image: {{ .Values.quobyte.image }}
+        imagePullPolicy: Always
+        env:
+          - name: NODENAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: QUOBYTE_DATA_PORT 
+            value: "7863"
+          - name: QUOBYTE_META_PORT
+            value: "7862"
+          - name: QUOBYTE_REG_PORT 
+            value: "7861"
+          - name: QUOBYTE_API_PORT
+            value: "7860" 
+          - name: QUOBYTE_SERVICE
+            value: registry
+          - name: CLOUD_INSTALL
+            value: "1" 
+          - name: CLUSTER_NS
+            value: {{ .Release.Namespace }}
+          - name: QUOBYTE_REGISTRY
+            value: quobyte.{{ .Release.Namespace }}.svc.cluster.local
           - name: LIMIT_OPEN_FILES
             value: "{{ .Values.quobyte.maxopenfiles }}"
           - name: LIMIT_MAX_PROCESSES

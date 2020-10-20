@@ -5,6 +5,6 @@ You just installed a truly scalable storage cluster.
 You can now log in to the quobyte web console with 
 the following IP:
 
- $ kubectl get svc/quobyte-webconsole 
+ $ kubectl get svc/quobyte-webui
 
 

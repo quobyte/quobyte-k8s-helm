@@ -4,7 +4,7 @@
 # The separate nodepool is required for performance isolation to avoid
 # other workloads from impacting your storage.
 # Minimum node pool size is 4 machines.
-nodepoolname: pool-1
+nodepoolname: default-pool
 
 # external-dns allows you to use your Quobyte cluster from outside the Kubernetes
 # cluster, e.g. from bare metal machines or VMs or across data centers.
@@ -82,7 +82,7 @@ quobyte:
   
   # DO NOT EDIT OPTIONS BELOW THIS LINE
   webconsoleport: 8080
-  image: gcr.io/eda-eval/quobyte-server:3.0.pre7
+  image: gcr.io/eda-eval/quobyte-server:3
   # Maximum number of open file descriptors per container,
   # must be set to 999,999 or more.
   maxopenfiles: "1048576"

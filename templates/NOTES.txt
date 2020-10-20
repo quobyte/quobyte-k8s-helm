@@ -9,7 +9,7 @@ To learn more about the release, try:
 
 To login to your new Quobyte web console get the public endpoint:
 
-  $ kubectl get svc quobyte-webconsole 
+  $ kubectl get svc quobyte-webui 
 
 Paste this IP-address + port 8080 into your web browser and login 
 using the defined credentials.
