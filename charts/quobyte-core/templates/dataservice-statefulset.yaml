@@ -60,8 +60,9 @@ spec:
               - |
                 touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
                 echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/data.cfg
-                for i in $(basename $(ls -d /var/lib/quobyte/devices/data*))
+                for j in $(ls -d /var/lib/quobyte/devices/data*)
                 do
+                  i=$(basename $j)
                   if [ ! -e /var/lib/quobyte/devices/${i}/QUOBYTE_DEV_SETUP ];then
                     /usr/bin/qmkdev -d -t DATA /var/lib/quobyte/devices/${i}
                   fi
