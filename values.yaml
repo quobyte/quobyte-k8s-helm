@@ -2,7 +2,7 @@
 csi_enabled: true
 
 # decides if quobyte clients should be deployed using this chart
-client_enabled: true
+client_enabled: false
 
 # decides if quobyte core services (metadata, registry, dataservice, quobyte-api, web-console
 # shall be deployed using this chart.
@@ -34,15 +34,3 @@ quobyte-csi:
     enableSnapshots: false
     podSecurityPolicies: false
     useK8SNamespaceAsTenant: false
-
-# todo:
-# - think about quobyte-api-url
-# - target port webconsole
-# - prometheus port
-# - make webconsole failovering, not hardcoded to quobyte-0
-# - make csi part variable
-# - think about namespaces (because of the quobyte admin secret)
-# - make tenant configurable
-# - make first time user (admin/quobyte) configurable
-# v integrate csi chart as sub chart
-# - make registry url a variable for eassier client configuration
