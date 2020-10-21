@@ -10,9 +10,9 @@ metadata:
 spec:
   clusterIP: "None"
   ports:
-  - port: 7865
+  - port: 7861
     name: "quobyte"
-    protocol: "TCP"
+    targetPort: 7861
   selector:
     app: quobyte-reg
 

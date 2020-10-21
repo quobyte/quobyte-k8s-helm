@@ -31,6 +31,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
           - name: QUOBYTE_DATA_PORT 
             value: "7863"
           - name: QUOBYTE_META_PORT
