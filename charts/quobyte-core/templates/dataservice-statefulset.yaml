@@ -56,7 +56,7 @@ spec:
           {{- end }}
         command:
               - /bin/sh 
-              - -xec
+              - -xc
               - |
                 touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
                 echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/data.cfg
@@ -78,7 +78,7 @@ spec:
                     fi
                   done
                   if [ $cnt -eq 4 ];then
-                    break
+                    exit 0
                   fi
                   ((attempts++))
                   sleep 1
