@@ -55,7 +55,7 @@ spec:
             mountPath: /var/lib/quobyte/devices/registry
         command:
               - /bin/sh 
-              - -xec
+              - -xc
               - |
                 touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
                 echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/registry.cfg

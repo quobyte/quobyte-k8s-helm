@@ -52,22 +52,26 @@ spec:
             mountPath: /etc/quobyte
         command:
               - /bin/sh 
-              - -xec
+              - -xc
               - |
                 touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
                 echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/api.cfg
                 attempts=0
-                while true
+                while [[ $attempts < 60 ]]
                 do
                   cnt=0
-                  for i in $(seq 0 3)
+                  for i in 0 1 2 3
                   do
                     r=$(curl -s -o /dev/null -I -w "%{http_code}" http://quobyte-reg-${i}.quobyte.${CLUSTER_NS}.svc.cluster.local:7871/)
-                    if [[ "$r" == "200" ]]; then ((cnt++)) fi
+                    if [ $r -eq 200 ];then
+                      ((cnt++))
+                    fi
                   done
-                  if [[ $cnt == 4 ]]; then break fi
+                  if [ $cnt -eq 4 ];then
+                    exit 0
+                  fi
                   ((attempts++))
-                  if [[ $attempts > 60 ]]; then break fi
+                  sleep 1
                 done
       containers:
       - name: quobyte-api
