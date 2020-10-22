@@ -10,7 +10,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: quobyte-web-0 
+    app: quobyte-web 
   ports:
   - protocol: TCP
     port: 8080
