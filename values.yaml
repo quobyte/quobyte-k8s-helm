@@ -2,7 +2,7 @@
 csi_enabled: true
 
 # decides if quobyte clients should be deployed using this chart
-client_enabled: false
+client_enabled: true 
 
 # decides if quobyte core services (metadata, registry, dataservice, quobyte-api, web-console
 # shall be deployed using this chart.
