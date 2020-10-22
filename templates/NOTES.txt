@@ -11,5 +11,5 @@ To login to your new Quobyte web console get the public endpoint:
 
   $ kubectl get svc quobyte-webui 
 
-Paste this IP-address + port 8080 into your web browser and login 
-using the defined credentials.
+Paste this IP-address + port 8080 into your web browser and follow 
+the setup wizard for a first time install.
