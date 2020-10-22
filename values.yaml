@@ -1,9 +1,14 @@
-# Decides if csi framework and quobyte driver should be deployed using this chart
+# Enables the Quobyte CSI plugin if set to true.
+# Please configure the CSI plugin in charts/quobyte-csi/values.yaml
 csi_enabled: true
 
-# decides if quobyte clients should be deployed using this chart
+# Enables automatic Quobyte client deployments if set to true.
+# Must be enabled and configured when using the CSI plugin.
+# Please configure in charts/quobyte-client/values.yaml
 client_enabled: true 
 
-# decides if quobyte core services (metadata, registry, dataservice, quobyte-api, web-console
-# shall be deployed using this chart.
+# Enables the provisioning of Quobyte services if set to true.
+# Please consult the readme for requirements for running
+# the Quobyte services on Kubernetes.
+# Please configure in charts/quobyte-core/values.yaml
 core_enabled: true
