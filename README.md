@@ -12,7 +12,7 @@ Quobyte volumes from Kubernetes via persistent volumes claims.
 * You can run one Quobyte cluster per kubernetes cluster. If you want to run multiple Quobyte clusters, each needs a separate Kubernetes cluster. You can access Quobyte clusters from outside Kubernetes (or another k8s cluster) when you use external dns (see further down).
 * Kubernetes version 1.17.12-gke.500 or 1.17.9-gke.6300, use other versions at your own risk.
 * For production use the minimum node pool configuration is 4 or more VMs, each at least n2-standard-16. For functional testing you can run with a lower number of VMs. However, we strongly discourage using smaller machine types. If you want to deploy S3 proxies you need at least 6 VMs.
-* If you want to access the Quobyte cluster from the outside world (i.e. other k8s clusters, GCE VMs), you have to enable external-dns. To use this yoiu must allow all external API calls from yor GKE Kubernetes cluster. This should be done when you create the cluster. In addition, you need a properly configured Cloud DNS zone.
+* If you want to access the Quobyte cluster from the outside world (i.e. other k8s clusters, GCE VMs), you have to enable external-dns. To use this you must allow all external API calls from yor GKE Kubernetes cluster. This should be done when you create the cluster. In addition, you need a properly configured Cloud DNS zone.
 
 ## Deploy a new Quobyte cluster
 
