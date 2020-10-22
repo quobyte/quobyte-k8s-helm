@@ -20,10 +20,10 @@ As a first step, you need to configure the Helm Chart to match your environment.
 Please modify the values.yaml file in the main directory and also in each chart
 subdirectory. You'll find an explanation for each value inside the files:
 
-```values.yaml
-charts/quobyte-csi/values.yaml
-charts/quobyte-client/values.yaml
-charts/quobyte-core/values.yaml```
+    values.yaml
+    charts/quobyte-csi/values.yaml
+    charts/quobyte-client/values.yaml
+    charts/quobyte-core/values.yaml
 
 Please make sure to configure the username and password secrets in the quobyte-csi/values.yaml file.
 The password must be base 64 encoded. Once your Quobyte cluster is up and running you must create this
@@ -33,9 +33,7 @@ can verify the username/password with qmgmt if in doubt.
 
 Once you have configured the chart properly you can deploy the cluster by running
 
-```
- $ helm install <newDeploymentName> </path/to/helmChart/> 
-```
+    $ helm install <newDeploymentName> </path/to/helmChart/> 
 
 You will get a Quobyte installation that consists of all the necessary 
 parts to provide you with 
@@ -52,7 +50,8 @@ was defined in values.yaml.
 
 # How to update/upgrade the cluster?
 
-``helm upgrade qs . --set-string timestamp=$(date '+%s')``
+`helm upgrade qs . --set-string timestamp=$(date '+%s')`
+
 This will delete stateful sets backwards and re-create them.
  
 # Deleting the Cluster/Uninstalling the Cluster
