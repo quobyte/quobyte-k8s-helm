@@ -27,4 +27,7 @@ You can use one storage-class out of the box: "quobyte-rf3".
 This one uses 3x replication. You can add more storage classes to suit
 your needs; just take "quobyte-rf3" as an example.
 
+How to update/upgrade the cluster?
 
+ helm upgrade qs . --set-string timestamp=$(date '+%s')
+ This will delete stateful sets backwards and re-create them.
