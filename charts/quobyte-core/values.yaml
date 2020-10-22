@@ -33,7 +33,8 @@ quobyte:
   # Loadbalancer to make the Quobyte webconsole accessible.
   # If set to true and internal IP will be used, if set to false an external IP will be used
   # the exact semantics of internal/external depend on your k8s config or provider.
-  lbinternal: true
+  ## lbinternal: true
+  lbinternal: false 
   
   # Configuration for the persistent disks used by the Quobyte services.
   # This is *not* the configuration for the CSI plugin and the storage classes
