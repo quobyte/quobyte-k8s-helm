@@ -76,9 +76,16 @@ quobyte:
       
   # Set enabled to start the Quobyte S3 service. Requires a properly
   # configured domain name.
+  # As S3 is an HTTP-based protocol, it requires a correct DNS hostname setup. 
+  # Generally the S3 service will be available under a specific hostname such as s3.example.com. 
+  # Buckets can be addressed as a subdomain of the host e.g., <bucket name>.s3.example.com.
+  #
+  # HTTP requires a setup of both the S3 hostname and a wildcard hostname for subdomains in your DNS
+  # infrastructure which points to the machine or machines running the S3 Proxy. 
+  # So at a minimum, there are two CNAME records that point to a machine running the S3 proxy
   s3:
     enabled: false
-    domain: s3.example.com
+    dnsname: s3.example.com
   
   # DO NOT EDIT OPTIONS BELOW THIS LINE
   webconsoleport: 8080
