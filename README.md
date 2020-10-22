@@ -6,6 +6,11 @@ This helm chart deploys the Quobyte core services as well as the clients and
 the CSI plugin. This allows you to run Quobyte in Kubernetes and consume
 Quobyte volumes from Kubernetes via persistent volumes claims.
 
+You can download the Free Edition of Quobyte from <https://www.quobyte.com>
+with up to 150TB capacity and CSI support.
+To access the Community support forum visit <https://support.quobyte.com> and
+sign up for a free Quobyte account.
+
 ## Requirements
 
 * The Quobyte server pods must run on a dedicated node pool, i.e. the VMs/machines in this node pool must not run any other pods. This is required to guarantee the stability and performance of your storage system.
