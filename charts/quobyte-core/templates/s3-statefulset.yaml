@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: quobyte-s3 # has to match .spec.selector.matchLabels
+      annotations:
+        timestamp: "{{ now }}"
     spec:
       terminationGracePeriodSeconds: 10
       hostNetwork: true

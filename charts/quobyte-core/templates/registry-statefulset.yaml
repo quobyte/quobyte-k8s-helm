@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: quobyte-reg # has to match .spec.selector.matchLabels
+      annotations:
+        timestamp: "{{ now }}"
     spec:
       subdomain: "quobyte"
       terminationGracePeriodSeconds: 10
@@ -62,7 +64,7 @@ spec:
                 echo rpc.bind.address=${MY_POD_IP} >> /etc/quobyte/registry.cfg
                 echo hostname=${HOSTNAME} >> /etc/quobyte/registry.cfg
                 NODENUM=$(echo "$NODENAME" | tr -dc "0-9")
-                if [ ! -e /var/lib/quobyte/devices/registry/QUOBYTE_DEVICE_SETUP ]; then
+                if [ ! -e /var/lib/quobyte/devices/registry/QUOBYTE_DEV_SETUP ]; then
                   if [[ $NODENUM == 0 ]]; then
                     /usr/bin/qbootstrap -y -d /var/lib/quobyte/devices/registry
                   else
