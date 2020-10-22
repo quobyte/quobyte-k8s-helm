@@ -1,7 +1,7 @@
 quobyte:
   # apiURL should be of the form http(s)://<ip or resolvable host>:<port>
-  # Example Quobyte API: http://hydrogen.quobyte.com:26801
-  apiURL: "http://10.125.2.77:10330" 
+  # Please adjust the namespace accordingly default is 'default'
+  apiURL: http://quobyte-api.default.svc.cluster.local:7860 # this works for intra cluster communication
   
   # Quobyte client should be deployed with <clientMountPoint>/mounts
   # For example, if you set clientMountPoint: /home/quobyte then quobyte
