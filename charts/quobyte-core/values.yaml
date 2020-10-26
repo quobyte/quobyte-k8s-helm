@@ -91,7 +91,8 @@ quobyte:
   
   # DO NOT EDIT OPTIONS BELOW THIS LINE
   webconsoleport: 8080
-  image: gcr.io/eda-eval/quobyte-server:3
+  image: quay.io/quobyte/quobyte-server:2
+#image: gcr.io/eda-eval/quobyte-server:3
   # Maximum number of open file descriptors per container,
   # must be set to 999,999 or more.
   maxopenfiles: "1048576"

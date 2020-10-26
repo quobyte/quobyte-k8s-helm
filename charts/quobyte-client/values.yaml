@@ -1,7 +1,8 @@
 # DO NOT EDIT THE DEFAULT VALUES BELOW THIS LINE
 quobyte:
   clientMountPoint: /home/quobyte/mounts
-  clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre7
-  clientVersion: 3
+  clientImage: quay.io/quobyte/quobyte-client:2
+#  clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre7
+  clientVersion: 2 
 
 
