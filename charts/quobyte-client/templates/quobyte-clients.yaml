@@ -27,7 +27,7 @@ spec:
           - name: QUOBYTE_REGISTRY
             # Your Quobyte registry endpoint
             # FIXME namespace might not be default
-            value: quobyte-reg-0.quobyte.default.svc.cluster.local,quobyte-reg-1.quobyte.default.svc.cluster.local,quobyte-reg-2.quobyte.default.svc.cluster.local,quobyte-reg-3.quobyte.default.svc.cluster.local
+            value:  {{ .Values.quobyte.registry }}
           - name: QUOBYTE_MOUNT_POINT
             value:  {{ .Values.quobyte.clientMountPoint }}
           - name: NODENAME
