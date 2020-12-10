@@ -15,5 +15,6 @@ core_enabled: true
 
 quobyte-csi:
   quobyte:
-    quobyteUser: amFuLXF1b2J5dGU= 
-    quobytePassword: dGVzdC4xMjM0 
+    # these values must correspond to one user that exists in the Quobyte user database.
+    quobyteUser: a3ViZXJuYXV0Cg== 
+    quobytePassword: cmVhbGx5UmVhbGx5Q2hhbmdlTWUK  
