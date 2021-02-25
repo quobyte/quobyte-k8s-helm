@@ -1,3 +1,5 @@
+# Used to generate CSI deployment files specific to given k8s version
+k8sVersion: "1.17.2"
 quobyte:
   # Replace with the name of your tenant that you would like to use
   # for the PVC volumes.

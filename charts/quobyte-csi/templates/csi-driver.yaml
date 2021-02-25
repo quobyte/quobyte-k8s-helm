@@ -25,7 +25,11 @@ spec:
   fsGroup:
     rule: 'RunAsAny'
 ---
+{{ if semverCompare ">=1.19.0" .Values.k8sVersion }}
 apiVersion: storage.k8s.io/v1
+{{ else }}
+apiVersion: storage.k8s.io/v1beta1  
+{{ end }}
 kind: CSIDriver
 metadata:
   name: {{ .Values.quobyte.csiProvisionerName }}
@@ -39,6 +43,9 @@ metadata:
   name: quobyte-csi-controller-{{ .Values.quobyte.csiProvisionerName | replace "." "-"  }}
   namespace: kube-system
 spec:
+  selector:
+    matchLabels:
+      app: quobyte-csi-controller-{{ .Values.quobyte.csiProvisionerName | replace "." "-"  }}
   serviceName: quobyte-csi-{{ .Values.quobyte.csiProvisionerName | replace "." "-"  }}
   replicas: 1
   template:
@@ -118,7 +125,6 @@ spec:
       {{ end }}
         - name: quobyte-csi-plugin
           image: {{ .Values.quobyte.dev.csiImage }}
-          imagePullPolicy: "Always"
           args :
             - "--csi_socket=$(CSI_ENDPOINT)"
             - "--quobyte_mount_path=$(QUOBYTE_MOUNT_PATH)"
@@ -147,9 +153,19 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /var/lib/csi/sockets/pluginproxy/
+            {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+            - name: certs
+              mountPath: /etc/ssl/certs/
+            {{ end }}
       volumes:
         - name: socket-dir
           emptyDir: {}
+        {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+        - name: certs
+          hostPath:
+            path: /etc/ssl/certs/
+            type: Directory
+        {{ end }}
 ---
 
 kind: ServiceAccount
@@ -402,6 +418,10 @@ spec:
               mountPropagation: "Bidirectional"
             - name: plugin-dir
               mountPath: /csi
+            {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+            - name: certs
+              mountPath: /etc/ssl/certs/
+            {{ end }}
         {{ if .Values.quobyte.podKiller.enable }}
         - name: quobyte-pod-killer
           securityContext:
@@ -445,6 +465,12 @@ spec:
           hostPath:
             path: /var/lib/kubelet/plugins_registry/
             type: DirectoryOrCreate
+        {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+        - name: certs
+          hostPath:
+            path: /etc/ssl/certs/
+            type: Directory
+        {{ end }}
 ---
 
 apiVersion: v1
@@ -459,7 +485,6 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: quobyte-csi-driver-registrar-role-{{ .Values.quobyte.csiProvisionerName | replace "." "-" }}
-  namespace: kube-system
 rules:
   - apiGroups: [""]
     resources: ["events"]
@@ -573,7 +598,11 @@ roleRef:
 {{ end }}
 
 {{ else }} # Without pod security policies
+{{ if semverCompare ">=1.19.0" .Values.k8sVersion }}
 apiVersion: storage.k8s.io/v1
+{{ else }}
+apiVersion: storage.k8s.io/v1beta1  
+{{ end }}
 kind: CSIDriver
 metadata:
   name: {{ .Values.quobyte.csiProvisionerName }}
@@ -670,7 +699,6 @@ spec:
        {{ end }}
         - name: quobyte-csi-plugin
           image: {{ .Values.quobyte.dev.csiImage }}
-          imagePullPolicy: "Always"
           args :
             - "--csi_socket=$(CSI_ENDPOINT)"
             - "--quobyte_mount_path=$(QUOBYTE_MOUNT_PATH)"
@@ -701,6 +729,10 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy/
             - name: log-dir
               mountPath: /tmp
+            {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+            - name: certs
+              mountPath: /etc/ssl/certs/
+            {{ end }}
       volumes:
         - name: socket-dir
           emptyDir: {}
@@ -708,6 +740,12 @@ spec:
           hostPath:
             path: /tmp
             type: Directory
+        {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+        - name: certs
+          hostPath:
+            path: /etc/ssl/certs/
+            type: Directory
+        {{ end }}
 ---
 
 kind: ServiceAccount
@@ -1014,6 +1052,10 @@ spec:
               mountPath: /csi
             - name: log-dir
               mountPath: /tmp
+            {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+            - name: certs
+              mountPath: /etc/ssl/certs/
+            {{ end }}
        {{ if .Values.quobyte.podKiller.enable }}
         - name: quobyte-pod-killer
           securityContext:
@@ -1061,6 +1103,12 @@ spec:
           hostPath:
             path: /tmp
             type: Directory
+        {{ if .Values.quobyte.mapHostCertsIntoContainer }}
+        - name: certs
+          hostPath:
+            path: /etc/ssl/certs/
+            type: Directory
+        {{ end }}
 ---
 
 apiVersion: v1
