@@ -23,15 +23,16 @@ core_enabled: false
 #
 quobyte-client:
   quobyte:
-    clientImage: gcr.io/eda-eval/quobyte-client:3.0.pre8
-    registry: 10.138.0.43,10.138.0.45,10.138.0.46,10.138.0.49 
+    registry: 10.164.0.31,10.164.0.18,10.164.0.8 
+    clientMountPoint: /home/quobyte/mounts
 
 # configure CSI plugin:
 #
 quobyte-csi:
   quobyte: 
-    quobyteTenant: "My Tenant"
+    quobyteTenant: "k8s-prod"
     quobyteUser: amFuLWt1YmVybmF1dA== 
     quobytePassword: Y2hhbmdlLW1lX2xhdGVy 
-    apiURL: http://10.138.0.43:7860
+    apiURL: http://10.164.0.31:7860
+    clientMountPoint: /home/quobyte
 
