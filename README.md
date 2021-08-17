@@ -38,7 +38,14 @@ can verify the username/password with qmgmt if in doubt.
 
 Once you have configured the chart properly you can deploy the cluster by running
 
-    $ helm install <newDeploymentName> </path/to/helmChart/> 
+```
+# Add csi helm repo. Only needed once:
+$ helm repo add quobyte-csi https://raw.githubusercontent.com/quobyte/quobyte-csi/master/docs/
+# Get the most recent csi version:
+$ helm dependency update
+# Install all sub charts as one metachart
+$ helm install <newDeploymentName> </path/to/helmChart/> 
+```
 
 You will get a Quobyte installation that consists of all the necessary 
 parts to provide you with 

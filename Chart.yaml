@@ -31,5 +31,5 @@ dependencies: # Evaluate the sub components to be loaded.
     condition: core_enabled
   - name: quobyte-csi 
     version: "1.4.0"
-    repository: https://hub.helm.sh/charts/quobyte-csi/quobyte-csi 
+    repository: "@quobyte-csi"
     condition: csi_enabled
