@@ -5,34 +5,30 @@
 #
 
 # Enables the Quobyte CSI plugin if set to true.
-# Please configure the CSI plugin in charts/quobyte-csi/values.yaml
+# You need to configure registry and api addresses below.
 csi_enabled: true
 
 # Enables automatic Quobyte client deployments if set to true.
 # Must be enabled and configured when using the CSI plugin.
-# Please configure in charts/quobyte-client/values.yaml
+# Please configure below.
 client_enabled: true 
 
 # Enables the provisioning of Quobyte services if set to true.
-# Please consult the readme for requirements for running
-# the Quobyte services on Kubernetes.
-# Please configure in charts/quobyte-core/values.yaml
+# Please configure below if enabled.
 core_enabled: false 
 
 # configure client:
 #
 quobyte-client:
   quobyte:
-    registry: 10.164.0.31,10.164.0.18,10.164.0.8 
+    registry: 10.164.15.211,10.164.0.46,10.164.0.59 
     clientMountPoint: /home/quobyte/mounts
 
 # configure CSI plugin:
 #
 quobyte-csi:
   quobyte: 
-    quobyteTenant: "k8s-prod"
-    quobyteUser: amFuLWt1YmVybmF1dA== 
-    quobytePassword: Y2hhbmdlLW1lX2xhdGVy 
-    apiURL: http://10.164.0.31:7860
+    useK8SNamespaceAsTenant: True
+    apiURL: http://10.164.15.211:7860
     clientMountPoint: /home/quobyte
 
