@@ -1,6 +1,6 @@
 Welcome to Quobyte :)
 
-You just installed the Quobyte client on every nodee of your 
+You just installed the Quobyte client on every node of your 
 cluster (using a daemonset). 
 If you also installed quobytes storage driver you are now able 
 to use dynamically provisioned Quobyte storage:
