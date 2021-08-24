@@ -30,6 +30,7 @@ dependencies: # Evaluate the sub components to be loaded.
     version: "0.1.0"
     condition: core_enabled
   - name: quobyte-csi 
-    version: "1.4.0"
+    #version: "1.4.0"
+    version: "v1.7.0"
     repository: "@quobyte-csi"
     condition: csi_enabled
