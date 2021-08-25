@@ -13,8 +13,17 @@ client_enabled: true
 # Please configure in charts/quobyte-core/values.yaml
 core_enabled: true
 
-quobyte-csi:
+# configure client:
+#
+quobyte-client:
   quobyte:
-    # these values must correspond to one user that exists in the Quobyte user database.
-    quobyteUser: a3ViZXJuYXV0Cg== 
-    quobytePassword: cmVhbGx5UmVhbGx5Q2hhbmdlTWUK  
+    clientMountPoint: /home/quobyte/mounts
+
+# configure CSI plugin:
+#
+quobyte-csi:
+  quobyte: 
+    #useK8SNamespaceAsTenant: True
+    clientMountPoint: /home/quobyte
+    apiURL: http://quobyte-api.default.svc.cluster.local:7860
+
