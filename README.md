@@ -76,3 +76,28 @@ for testing, you will have to manually delete the PVCs before starting
 a new deployment of Quobyte. Please note that you will *lose all your
 data from your previous cluster* if you delete the PVCs!
 
+
+## Optimization
+
+Quobyte will alert if two network values are set to low. To optimize it you can tune your worker nodes with two sysctl values:
+
+```
+   net.core.rmem_max: '67108864'  
+   net.core.wmem_max: '1048576'
+```
+
+To do so permanently on GKE for example you can create a config file like this:
+```
+linuxConfig:
+ sysctl:
+   net.core.rmem_max: '67108864'  
+   net.core.wmem_max: '1048576'
+```
+
+and start a node deployment or cluster deployment like this:
+
+```
+gcloud container clusters create CLUSTER_NAME --system-config-from-file=SYSTEM_CONFIG_PATH
+```
+
+
