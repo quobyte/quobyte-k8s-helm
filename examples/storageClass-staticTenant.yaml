@@ -12,10 +12,10 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-name: quobyte-secret
   csi.storage.k8s.io/provisioner-secret-namespace: quobyte
   csi.storage.k8s.io/node-publish-secret-name: quobyte-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: ${pvc.namespace}
+  csi.storage.k8s.io/node-publish-secret-namespace: quobyte 
   group: root
   quobyteConfig: BASE
-  quobyteTenant: "My Tenant" # Do not use mapping between k8s-namespace and Quobyte-Tenant
+  quobyteTenant: "default" # Do not use mapping between k8s-namespace and Quobyte-Tenant
   user: root
 provisioner: csi.quobyte.com
 
