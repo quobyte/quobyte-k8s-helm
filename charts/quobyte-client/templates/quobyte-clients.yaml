@@ -76,9 +76,7 @@ spec:
           privileged: true
         volumeMounts:
           - name: quobyte-mount
-            ## mountPath: /home/quobyte
-            mountPath:  {{ .Values.quobyte.clientMountPoint }}
-
+            mountPath: {{ .Values.quobyte.volumeMountPoint }}
             mountPropagation: Bidirectional
           - name: minidumps-dir
             mountPath: /tmp/minidumps
@@ -89,8 +87,7 @@ spec:
       volumes:
       - name: quobyte-mount
         hostPath:
-          ## path: /home/quobyte
-          path: {{ .Values.quobyte.clientMountPoint }}
+          path: {{ .Values.quobyte.volumeMountPoint }}
       - name: minidumps-dir
         hostPath:
           path: /var/lib/quobyte/.minidumps

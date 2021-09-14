@@ -1,6 +1,7 @@
 # DO NOT EDIT THE DEFAULT VALUES BELOW THIS LINE
 quobyte:
   clientMountPoint: /home/quobyte/mounts
+  volumeMountPoint: /home/quobyte
   clientImage: quay.io/quobyte/quobyte-client:3.0.pre 
   clientVersion: 3
   registry: quobyte-reg-0.quobyte.default.svc.cluster.local,quobyte-reg-1.quobyte.default.svc.cluster.local,quobyte-reg-2.quobyte.default.svc.cluster.local
