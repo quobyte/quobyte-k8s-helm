@@ -23,12 +23,13 @@ quobyte-client:
   quobyte:
     registry: 10.164.15.211,10.164.0.46,10.164.0.59 
     clientMountPoint: /home/quobyte/mounts
+    volumeMountPoint: /home/quobyte
 
 # configure CSI plugin:
 #
 quobyte-csi:
   quobyte: 
-    useK8SNamespaceAsTenant: True
+    #useK8SNamespaceAsTenant: True
     apiURL: http://10.164.15.211:7860
     clientMountPoint: /home/quobyte
 
