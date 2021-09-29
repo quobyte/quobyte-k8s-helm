@@ -11,6 +11,13 @@ To access the Community support forum visit <https://support.quobyte.com> and si
 
 ![Quobyte Webconsole](examples/images/screenshot.png "Webconsole Screenshot")
 
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Deploy a Quobyte cluster](#cluster-deploy)
+- [Deploy Quobyte clients and CSI plugin](#client-deploy)
+
 ## Requirements
 
 * For production use the minimum node pool configuration is 4 or more worker nodes, each at least 8 cores with 32GB RAM. For functional testing you can run with a lower number of nodes, cores or memory. A smaller machine count will affect availability while less ressources will affect performance.  
@@ -34,9 +41,9 @@ For all Quobyte options see also the official documentation:
 
 https://docs.quobyte.com/
 
-## Consuming storage from an existing Quobyte cluster
+## Deploy Quobyte clients and CSI plugin
 
-To consume storage from a Quobyte cluster you can use the same helm chart with a different configuration:
+To consume storage from a Quobyte cluster you can use the same Helm chart with a different configuration:
 
 ```
 $ cp values_csi+client.yaml_example values.yaml 
@@ -54,14 +61,14 @@ $ helm dependency update
 $ helm install <clientDeployment> . 
 ```
 
-# How to update/upgrade a Quobyte cluster?
+## How to update/upgrade a Quobyte cluster?
 
 ```
 $ helm upgrade <DeploymentName> . --set-string timestamp=$(date '+%s')`
 ``` 
 This will delete stateful sets backwards and re-create them.
  
-# Deleting the Cluster/Uninstalling the Cluster
+## Deleting the Cluster/Uninstalling the Cluster
 
 Using helm uninstall will *not* delete the persistent volume claims used
 *by the Quobyte core services*. If you delete these PVCs all the data
