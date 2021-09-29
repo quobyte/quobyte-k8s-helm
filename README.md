@@ -17,6 +17,9 @@ To access the Community support forum visit <https://support.quobyte.com> and si
 - [Requirements](#requirements)
 - [Deploy a Quobyte cluster](#cluster-deploy)
 - [Deploy Quobyte clients and CSI plugin](#client-deploy)
+- [How to update/upgrade a Quobyte cluster](#cluster-upgrade)
+- [Deleting the cluster/Uninstalling a Quobyte cluster](#cluster-deletion)
+- [Quobyte cluster optimization](#cluster-optimization)
 
 ## Requirements
 
@@ -61,14 +64,14 @@ $ helm dependency update
 $ helm install <clientDeployment> . 
 ```
 
-## How to update/upgrade a Quobyte cluster?
+## How to update/upgrade a Quobyte cluster
 
 ```
 $ helm upgrade <DeploymentName> . --set-string timestamp=$(date '+%s')`
 ``` 
 This will delete stateful sets backwards and re-create them.
  
-## Deleting the Cluster/Uninstalling the Cluster
+## Deleting the cluster/Uninstalling a Quobyte cluster
 
 Using helm uninstall will *not* delete the persistent volume claims used
 *by the Quobyte core services*. If you delete these PVCs all the data
@@ -80,7 +83,8 @@ a new deployment of Quobyte. Please note that you will *lose all your
 data from your cluster* if you delete the PVCs!
 
 
-## Quobyte cluster Optimization
+## Quobyte cluster optimization
+
 
 Quobyte will send alerts if two network values are set to low. To optimize it you can tune your worker nodes with two sysctl values:
 
