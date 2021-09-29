@@ -11,23 +11,37 @@ To access the Community support forum visit <https://support.quobyte.com> and si
 
 ## Requirements
 
-* The Quobyte server pods must run on a dedicated node pool, i.e. the VMs/machines in this node pool must not run any other pods. This is required to guarantee the stability and performance of your storage system.
-* You can run one Quobyte cluster per kubernetes cluster. If you want to run multiple Quobyte clusters, each needs a separate Kubernetes cluster. You can access Quobyte clusters from outside Kubernetes (or another k8s cluster) when you use external dns (see further down).
-* For production use the minimum node pool configuration is 4 or more VMs, each at least 8 cores with 32GB RAM. For functional testing you can run with a lower number of VMs, cores or memory. However, we strongly discourage using smaller machine types. 
-* If you want to access the Quobyte cluster from the outside world (i.e. other k8s clusters, VMs), you have to enable external-dns. To use this you must allow all external API calls from yor Kubernetes cluster. This should be done when you create the cluster. In addition, you need a properly configured Cloud DNS zone.
+* For production use the minimum node pool configuration is 4 or more worker nodes, each at least 8 cores with 32GB RAM. For functional testing you can run with a lower number of nodes, cores or memory. A smaller machine count will affect availability while less ressources will affect performance.  
+* To guarantee stability and performance of a Quoybte storage system it is recommendet to run all storage pods on a dedicated node pool.
+* Quobyte will work best with optimized network settings for your worker nodes. See "Quobyte cluster Optimization" below. 
+* If you want to access the Quobyte cluster from the outside world (i.e. other k8s clusters, VMs), you need to make sure that all Quobyte services are reachable with all ports. For firewall planning etc. see [Quobyte Services](https://docs.quobyte.com/docs/16/latest/reference_services.html) for details. 
 
-## Deploy a new Quobyte cluster
+## Deploy a Quobyte cluster
 
-As a first step, you need to configure the Helm Chart to match your environment.
-Please modify the values.yaml file in the main directory. Configuring the different sections here will 
-overwrite defaults defined in each charts subdirectory. You'll find an explanation for each value inside the subchart 
-yaml files:
+To install a Quoybte cluster you need a working values.yaml and helm installed.
 
-    charts/quobyte-csi/values.yaml
-    charts/quobyte-client/values.yaml
-    charts/quobyte-core/values.yaml
+```
+$ cp values_core-cluster.yaml_example values.yaml
+$ helm install <deploymentName> .
+```
 
-Once you have configured the chart properly you can deploy the cluster by running
+After all pods are up and running you access your webconsole.
+You can continue to license the cluster, create a super user 
+and configure the cluster according to your needs from there.
+For all Quobyte options see also the official documentation:
+
+https://docs.quobyte.com/
+
+## Consuming storage from an existing Quobyte cluster
+
+To consume storage from a Quobyte cluster you can use the same helm chart with a different configuration:
+
+```
+$ cp values_csi+client.yaml_example values.yaml 
+# Adjust values as needed by your existing Quobyte cluster
+```
+
+Once you have configured the chart properly you can deploy Quobyte clients and the Quobyte CSI plugin: 
 
 ```
 # Add csi helm repo. Only needed once:
@@ -35,19 +49,14 @@ $ helm repo add quobyte-csi https://raw.githubusercontent.com/quobyte/quobyte-cs
 # Get the most recent csi version:
 $ helm dependency update
 # Install all sub charts as one metachart
-$ helm install <DeploymentName> </path/to/thisChart/> 
+$ helm install <clientDeployment> . 
 ```
 
-You will get a Quobyte installation that consists of all the necessary 
-parts to provide you with 
-- a quobyte storage cluster ("Storage provider")
-- the needed parts to consume storage dynamically ("quobyte-client/ quobyte-csi") 
-within the same cluster.
+# How to update/upgrade a Quobyte cluster?
 
-# How to update/upgrade the cluster?
-
-`helm upgrade <DeploymentName> </path/to/thisChart/> --set-string timestamp=$(date '+%s')`
-
+```
+$ helm upgrade <DeploymentName> . --set-string timestamp=$(date '+%s')`
+``` 
 This will delete stateful sets backwards and re-create them.
  
 # Deleting the Cluster/Uninstalling the Cluster
@@ -57,12 +66,12 @@ Using helm uninstall will *not* delete the persistent volume claims used
 that was stored on your cluster will be lost!
 
 If you plan to uninstall/delete your cluster to create a new one, e.g.
-for testing, you will have to manually delete the PVCs before starting
+for testing, you will have to delete the PVCs before starting
 a new deployment of Quobyte. Please note that you will *lose all your
-data from your previous cluster* if you delete the PVCs!
+data from your cluster* if you delete the PVCs!
 
 
-## Optimization
+## Quobyte cluster Optimization
 
 Quobyte will send alerts if two network values are set to low. To optimize it you can tune your worker nodes with two sysctl values:
 
