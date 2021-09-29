@@ -1,15 +1,13 @@
-# Quobyte helm chart
+# Quobyte Helm chart
 
-Helm-based deployment for Quobyte Version 3.
+Helm-based Quobyte deployment.
 
 This helm chart deploys the Quobyte core services as well as the clients and
 the CSI plugin. This allows you to run Quobyte in Kubernetes and consume
 Quobyte volumes from Kubernetes via persistent volume claims.
 
-You can download the Free Edition of Quobyte from <https://www.quobyte.com>
-with up to 150TB capacity and CSI support.
-To access the Community support forum visit <https://support.quobyte.com> and
-sign up for a free Quobyte account.
+You can directly start to use the Free Edition of Quobyte with up to 150TB capacity and CSI support.
+To access the Community support forum visit <https://support.quobyte.com> and sign up for a free Quobyte account.
 
 ## Requirements
 
