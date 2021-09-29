@@ -15,11 +15,11 @@ To access the Community support forum visit <https://support.quobyte.com> and si
 ## Table of Contents
 
 - [Requirements](#requirements)
-- [Deploy a Quobyte cluster](#cluster-deploy)
-- [Deploy Quobyte clients and CSI plugin](#client-deploy)
-- [How to update/upgrade a Quobyte cluster](#cluster-upgrade)
-- [Deleting the cluster/Uninstalling a Quobyte cluster](#cluster-deletion)
-- [Quobyte cluster optimization](#cluster-optimization)
+- [Deploy a Quobyte cluster](#deploy-a-quobyte-cluster)
+- [Deploy Quobyte clients and CSI plugin](#deploy-quobyte-clients-and-csi-plugin)
+- [How to update/upgrade a Quobyte cluster](#how-to-updateupgrade-a-quobyte-cluster)
+- [Deleting the cluster/Uninstalling a Quobyte cluster](#deleting-the-clusteruninstalling-a-quobyte-cluster)
+- [Quobyte cluster optimization](#quobyte-cluster-optimization)
 
 ## Requirements
 
