@@ -15,7 +15,7 @@ sign up for a free Quobyte account.
 
 * The Quobyte server pods must run on a dedicated node pool, i.e. the VMs/machines in this node pool must not run any other pods. This is required to guarantee the stability and performance of your storage system.
 * You can run one Quobyte cluster per kubernetes cluster. If you want to run multiple Quobyte clusters, each needs a separate Kubernetes cluster. You can access Quobyte clusters from outside Kubernetes (or another k8s cluster) when you use external dns (see further down).
-* For production use the minimum node pool configuration is 4 or more VMs, each at least dual core with 16GB RAM. For functional testing you can run with a lower number of VMs. However, we strongly discourage using smaller machine types. If you want to deploy S3 proxies you need at least 6 VMs.
+* For production use the minimum node pool configuration is 4 or more VMs, each at least 8 cores with 32GB RAM. For functional testing you can run with a lower number of VMs, cores or memory. However, we strongly discourage using smaller machine types. 
 * If you want to access the Quobyte cluster from the outside world (i.e. other k8s clusters, VMs), you have to enable external-dns. To use this you must allow all external API calls from yor Kubernetes cluster. This should be done when you create the cluster. In addition, you need a properly configured Cloud DNS zone.
 
 ## Deploy a new Quobyte cluster
@@ -99,5 +99,5 @@ and start a node deployment or cluster deployment like this:
 ```
 gcloud container clusters create CLUSTER_NAME --system-config-from-file=SYSTEM_CONFIG_PATH
 ```
-
+See also https://cloud.google.com/kubernetes-engine/docs/how-to/node-system-config
 
