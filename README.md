@@ -29,12 +29,6 @@ yaml files:
     charts/quobyte-client/values.yaml
     charts/quobyte-core/values.yaml
 
-Please make sure to configure the username and password secrets in the quobyte-csi/values.yaml file.
-The password must be base 64 encoded. Once your Quobyte cluster is up and running you must create this
-user (via the UI or qmgmt) with the exact password you specified in the yaml file. This user is required
-to allow the Quobyte CSI plugin to talk to the Quobyte API service to provision volumes and quotas. You
-can verify the username/password with qmgmt if in doubt.
-
 Once you have configured the chart properly you can deploy the cluster by running
 
 ```
@@ -43,25 +37,18 @@ $ helm repo add quobyte-csi https://raw.githubusercontent.com/quobyte/quobyte-cs
 # Get the most recent csi version:
 $ helm dependency update
 # Install all sub charts as one metachart
-$ helm install <newDeploymentName> </path/to/thisChart/> 
+$ helm install <DeploymentName> </path/to/thisChart/> 
 ```
 
 You will get a Quobyte installation that consists of all the necessary 
 parts to provide you with 
 - a quobyte storage cluster ("Storage provider")
-- the needed tools to consume storage dynamically ("Storage consumer") 
+- the needed parts to consume storage dynamically ("quobyte-client/ quobyte-csi") 
 within the same cluster.
-
-To successfully use dynamically provisioned volumes you must create the user with the
-password you specified in quobyte-csi/values.yaml.
-Otherwise provisioning volumes will fail / pvcs will be pending.
-That means, if you roll out a cluster for the first time, you should 
-navigate to "Configuration" --> "User Database" and add the user that
-was defined in values.yaml.
 
 # How to update/upgrade the cluster?
 
-`helm upgrade qs . --set-string timestamp=$(date '+%s')`
+`helm upgrade <DeploymentName> </path/to/thisChart/> --set-string timestamp=$(date '+%s')`
 
 This will delete stateful sets backwards and re-create them.
  
@@ -79,7 +66,7 @@ data from your previous cluster* if you delete the PVCs!
 
 ## Optimization
 
-Quobyte will alert if two network values are set to low. To optimize it you can tune your worker nodes with two sysctl values:
+Quobyte will send alerts if two network values are set to low. To optimize it you can tune your worker nodes with two sysctl values:
 
 ```
    net.core.rmem_max: '67108864'  
