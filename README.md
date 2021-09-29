@@ -9,6 +9,8 @@ Quobyte volumes from Kubernetes via persistent volume claims.
 You can directly start to use the Free Edition of Quobyte with up to 150TB capacity and CSI support.
 To access the Community support forum visit <https://support.quobyte.com> and sign up for a free Quobyte account.
 
+![Quobyte Webconsole](examples/images/screenshot.png "Webconsole Screenshot")
+
 ## Requirements
 
 * For production use the minimum node pool configuration is 4 or more worker nodes, each at least 8 cores with 32GB RAM. For functional testing you can run with a lower number of nodes, cores or memory. A smaller machine count will affect availability while less ressources will affect performance.  
