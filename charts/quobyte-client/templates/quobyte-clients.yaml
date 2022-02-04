@@ -18,7 +18,7 @@ spec:
         version: "{{ .Values.quobyte.clientVersion }}"
     spec:
       containers:
-      - name: quobyte-client-csi
+      - name: quobyte-client
         image: {{ .Values.quobyte.clientImage }} 
         imagePullPolicy: Always
         env:
@@ -26,10 +26,14 @@ spec:
             value: INFO
           - name: QUOBYTE_REGISTRY
             # Your Quobyte registry endpoint
-            # FIXME namespace might not be default
             value:  {{ .Values.quobyte.registry }}
           - name: QUOBYTE_MOUNT_POINT
+            # Corresponding volume mount must be one directory below this path
+            # Example volumeMount is : /mnt/quobyte and clientMountPoint is /mnt/quobyte/mounts
             value:  {{ .Values.quobyte.clientMountPoint }}
+          # Enabling access keys requires Quobyte version 3.0 or later
+          - name: ENABLE_ACCESS_KEYS
+            value: {{ .Values.quobyte.enableAccessKeys }}  # to enable, set it to true
           - name: NODENAME
             valueFrom:
               fieldRef:
@@ -54,11 +58,14 @@ spec:
           - /bin/bash
           - -xec
           - |
+            ENABLE_ACCESS_CONTEXTS=""
+            if [[ ${ENABLE_ACCESS_KEYS} = true ]]; then
+              ENABLE_ACCESS_CONTEXTS="--enable-access-contexts"
+            fi
             if cut -d" " -f2 /proc/self/mounts | grep -q ${QUOBYTE_MOUNT_POINT}; then
               umount -l ${QUOBYTE_MOUNT_POINT}
             fi
-            mkdir -p ${QUOBYTE_MOUNT_POINT}
-            mkdir -p /root/.quobyte /home/quobyte/mounts
+            mkdir -p /root/.quobyte ${QUOBYTE_MOUNT_POINT} 
             if find "${QUOBYTE_MOUNT_POINT}/mounts" -mindepth 1 -print -quit 2>/dev/null | grep -q .; then
                 echo "POLLUTED MOUNT POINT DETECTED! Cannot use $QUOBYTE_MOUNT_POINT as a mount point."
                 echo "Please remove all files and directories from $QUOBYTE_MOUNT_POINT and "
@@ -66,11 +73,13 @@ spec:
             else
               # set the mount point immutable. As long as mount.quobyte does not run,
               # other processes cannot write data to this dir.
+              chattr +i ${QUOBYTE_MOUNT_POINT} || \
+                echo "WARNING: The local filesystem does not support IMMUTABLE flag. Mount point pollution is possible."
               /usr/bin/mount.quobyte --hostname ${NODENAME} \
                 --http-port 55000 -f \
                 -d ${QUOBYTE_CLIENT_LOG_LEVEL} -l /dev/stdout ${OPTS} \
                 --minidump-path /tmp/minidumps --allow-minidump-upload \
-                ${QUOBYTE_REGISTRY}/ ${QUOBYTE_MOUNT_POINT}
+                ${QUOBYTE_REGISTRY}/ ${QUOBYTE_MOUNT_POINT} ${ENABLE_ACCESS_CONTEXTS}
             fi
         securityContext:
           privileged: true
@@ -91,3 +100,8 @@ spec:
       - name: minidumps-dir
         hostPath:
           path: /var/lib/quobyte/.minidumps
+
+
+
+
+
