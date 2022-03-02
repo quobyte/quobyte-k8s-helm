@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tenantuser-accesskey
+  namespace: quobyte
+type: "kubernetes.io/quobyte"
+data:
+    accessKeyId: RHZjMTF6NmozcTdGd3pNdUZ6OGU= 
+    accessKeySecret: NjMrUEhxZ0IrTUVFNWVhQmV1ejFIWHlDRnBnYmdYNFIzV2Z0dW5NTg== 
+

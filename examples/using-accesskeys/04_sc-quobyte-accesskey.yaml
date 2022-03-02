@@ -1,0 +1,24 @@
+kind: StorageClass
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: sc-quobyte-accesskey
+parameters:
+# The following requires existing namespace "quobyte" + secret "tenantadmin-secret" + secret "tenantuser-accesskey"
+  csi.storage.k8s.io/controller-expand-secret-name: tenantadmin-credentials
+  csi.storage.k8s.io/controller-expand-secret-namespace: quobyte
+  csi.storage.k8s.io/provisioner-secret-name: tenantadmin-credentials
+  csi.storage.k8s.io/provisioner-secret-namespace: quobyte
+  csi.storage.k8s.io/node-publish-secret-name: tenantuser-accesskey
+  csi.storage.k8s.io/node-publish-secret-namespace: default 
+
+# Attributes to create a Quoybte volume with
+  createQuota: "true"
+  accessMode: "700"
+  user: kubernaut 
+  group: kubernautees
+  quobyteConfig: BASE
+  quobyteTenant: "kubernautees"  
+  labels: "usagetype:exploringSpace"
+provisioner: csi.quobyte.com
+
