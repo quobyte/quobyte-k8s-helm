@@ -1,0 +1,12 @@
+#
+# Using this example config you can tune 
+# worker nodes to honour Quobyte 
+# network recommendations when creating 
+# k8s clusters on Google infrastructure.
+# "$ gcloud container clusters create CLUSTER_NAME --system-config-from-file=optimized_gke_cluster.yaml
+#
+
+linuxConfig:
+ sysctl:
+   net.core.rmem_max: '67108864'  
+   net.core.wmem_max: '1048576'
