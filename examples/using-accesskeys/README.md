@@ -106,19 +106,26 @@ quobyte-csi:
   quobyte: 
     enableAccessKeys: true
 ```
+2. Make sure, that your Client configuration is configured to enable access keys
+```
+quobyte-client:
+  quobyte: 
+    enableAccessKeys: true
+```
+
 2. Deploy quobyte namespace
 ```
 kubectl apply -f 01_quobyte_namespace.yaml
 ```
-3. Deploy tenant admin secret
+4. Deploy tenant admin secret
 ```
 kubectl apply -f 02_tenantadmin-credentials.yaml
 ```
-4. Deploy unprivileged user access keys
+5. Deploy unprivileged user access keys
 ```
 kubectl apply -f 03_tenantuser-accesskeys.yaml
 ```
-5. Deploy Quobyte storage class
+6. Deploy Quobyte storage class
 ```
 kubectl apply -f 04_sc-quobyte-accesskey.yaml
 ```
