@@ -26,14 +26,14 @@ spec:
             value: INFO
           - name: QUOBYTE_REGISTRY
             # Your Quobyte registry endpoint
-            value:  {{ .Values.quobyte.registry }}
+            value:  "{{ .Values.quobyte.registry }}"
           - name: QUOBYTE_MOUNT_POINT
             # Corresponding volume mount must be one directory below this path
             # Example volumeMount is : /mnt/quobyte and clientMountPoint is /mnt/quobyte/mounts
-            value:  {{ .Values.quobyte.clientMountPoint }}
+            value:  "{{ .Values.quobyte.clientMountPoint }}"
           # Enabling access keys requires Quobyte version 3.0 or later
           - name: ENABLE_ACCESS_KEYS
-            value: {{ .Values.quobyte.enableAccessKeys }}  # to enable, set it to true
+            value: "{{ .Values.quobyte.enableAccessKeys }}"  # to enable, set it to true
           - name: NODENAME
             valueFrom:
               fieldRef:
