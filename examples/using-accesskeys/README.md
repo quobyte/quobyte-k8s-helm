@@ -1,11 +1,14 @@
 # Using access keys to mount Quobyte volumes
 
-In Quobyte 3.0 you have teh option to use accesskeys to authenticate against 
-the storage system.
-As a consequence the accessing identity is not resolved by the operating system 
-environment of a container or worker node but coupled only to a set of secrets (a.k.a "Access Keys").
+Quobyte 3.0 brings the option to use accesskeys to authenticate against 
+the storage system not only for Object Storage, but also for native mounts.
+In containerized environments this can be used to ensure reliable and secure user 
+identities on file system level.
+The accessing identity is not resolved by the operating system 
+environment of a container or worker as in usual file system mounts. Instead the file system
+takes care of that, allowing centralized administration.
 
-This allows you to profit from reliable and authenticated user identities on file system level. 
+This allows to profit from reliable and authenticated user identities on file system level. 
 Existing and new file ACLs can now be evaluated and used across boundaries of access methods.
 
 
