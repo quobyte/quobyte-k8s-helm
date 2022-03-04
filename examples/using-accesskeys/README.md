@@ -47,9 +47,9 @@ provisioner: csi.quobyte.com
 
 This example shows the distinction between provisioning/ expanding a volume and using it ("publishing" it).
 This separation is done using different sets of credentials: ``` tenantadmin-credentials ``` and ``` tenantuser-accesskey ```.
-The first Kubernetes secret hold a Quobyte username and password. This is used to communicate to the 
+The first Kubernetes secret holds a Quobyte username and password. This is used to communicate to the 
 Quobyte API and maintain Quobyte volumes. 
-The second secret holds nothing but an access key. This key is used to mount Quobyte volumes.
+The second secret holds an access key. This key is used to authenticate agains Quobyte and mount Quobyte volumes.
 Since an access key in Quobyte always resolves to a tenant, a username and a group we have all informations we 
 need to select the right volume to mount, create or modify files and do proper ACL enforcement.
 
