@@ -5,12 +5,11 @@ the storage system not only for Object Storage, but also for native mounts.
 In containerized environments this can be used to ensure reliable and secure user 
 identities on file system level.
 The accessing identity is not resolved by the operating system 
-environment of a container or worker as in usual file system mounts. Instead the file system
-takes care of that, allowing centralized administration.
+environment of a container or worker node. Instead the file system
+takes care of that, allowing centralized user administration.
 
 This allows to profit from reliable and authenticated user identities on file system level. 
 Existing and new file ACLs can now be evaluated and used across boundaries of access methods.
-
 
 ## Separating storage provisioning and storage consumption
 
