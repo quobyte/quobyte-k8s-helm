@@ -102,7 +102,7 @@ metadata:
   name: quobyte
 ```
 
-### Enable access key based storage class
+### Enable Access Key based storage class
 
 1. Make sure your CSI configuration is configured to enable access keys
 
@@ -135,7 +135,7 @@ kubectl apply -f 03_tenantuser-accesskeys.yaml
 kubectl apply -f 04_sc-quobyte-accesskey.yaml
 ```
 
-### Using access key based storage class
+### Using Access Key based storage class
 
 Kubernetes users can simply create a pvc using the defined storage class:
 
@@ -155,7 +155,36 @@ spec:
   storageClassName: sc-quobyte-accesskey 
 ```
 
+# Apply PVC declaration
+
 ```
 kubectl apply -f 05_example-pvc.yaml
+```
+
+# Example Pod declaration 
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod
+spec:
+  containers:
+  - name: server
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: quobytepvc
+  volumes:
+  - name: quobytepvc
+    persistentVolumeClaim:
+      claimName: quobyte-default-pvc
+```
+
+# Starting that Pod
+```
+kubectl apply -f 06_testpod.yaml
 ```
 
