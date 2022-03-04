@@ -8,7 +8,6 @@ The accessing identity is not resolved by the operating system
 environment of a container or worker node. Instead the file system
 takes care of that, allowing centralized user administration.
 
-This allows to profit from reliable and authenticated user identities on file system level. 
 Existing and new file ACLs can now be evaluated and used across boundaries of access methods.
 
 ## Separating storage provisioning and storage consumption
