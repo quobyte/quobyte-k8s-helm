@@ -139,7 +139,7 @@ kubectl apply -f 04_sc-quobyte-accesskey.yaml
 
 Kubernetes users can simply create a pvc using the defined storage class:
 
-# Example PVC
+#### Example PVC
 
 ```
 kind: PersistentVolumeClaim
@@ -155,13 +155,13 @@ spec:
   storageClassName: sc-quobyte-accesskey 
 ```
 
-# Apply PVC declaration
+#### Apply PVC declaration
 
 ```
 kubectl apply -f 05_example-pvc.yaml
 ```
 
-# Example Pod declaration 
+#### Example Pod declaration 
 
 ```
 apiVersion: v1
@@ -183,7 +183,7 @@ spec:
       claimName: quobyte-default-pvc
 ```
 
-# Starting that Pod
+#### Starting that Pod
 ```
 kubectl apply -f 06_testpod.yaml
 ```
