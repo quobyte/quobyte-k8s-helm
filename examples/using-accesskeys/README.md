@@ -74,7 +74,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: tenantuser-accesskey
-  namespace: quobyte
+  namespace: default
 type: "kubernetes.io/quobyte"
 data:
     accessKeyId: RHZjMTF6NmozcTdGd3pNdUZ6OGU= 
