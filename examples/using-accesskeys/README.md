@@ -1,6 +1,6 @@
 # Using Access Keys to mount Quobyte Volumes
 
-Quobyte 3.0 brings the option to use accesskeys to authenticate against 
+Quobyte 3.0 brings the option to use access keys to authenticate against 
 the storage system not only for Object Storage, but also for native mounts.
 In containerized environments this can be used to ensure reliable and secure user 
 identities on file system level.
@@ -52,7 +52,7 @@ For creating or modifying a volume we use a Quobyte user that has the attribute 
 is capable of modifying Quobyte volumes. This is defined in "tenantadmin-credentials". 
 To just consume storage ("publish" volumes) we use a user identity defined using access keys. This is defined in "tenantuser-accesskey" using nothing but an access key. This user identity resolves to a user that has no additional priviliges in Quobyte. 
 Using that storage consumption and storage administration are strictly separated. That is also reflected in using different namespaces in Kubernetes: 
-The admin user identity is using a dedicated namespace while the accesskeys can be created/ used in an independent namespace ("default" in this case).
+The admin user identity is using a dedicated namespace while the access keys can be created/ used in an independent namespace ("default" in this case).
 
 To complete the code examples here are the two different types of secrets:
 
