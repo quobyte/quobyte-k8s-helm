@@ -1,4 +1,4 @@
-# Using access keys to mount Quobyte volumes
+# Using Access Keys to mount Quobyte Volumes
 
 Quobyte 3.0 brings the option to use accesskeys to authenticate against 
 the storage system not only for Object Storage, but also for native mounts.
