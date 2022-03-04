@@ -46,10 +46,14 @@ provisioner: csi.quobyte.com
 ```
 
 This example shows the distinction between provisioning/ expanding a volume and using it ("publishing" it).
-For creating or modifying a volume we use a Quobyte user that has the attribute "tenant admin" and thus 
-is capable of modifying Quobyte volumes. This is defined in "tenantadmin-credentials". 
-To just consume storage ("publish" volumes) we use a user identity defined using access keys. This is defined in "tenantuser-accesskey" using nothing but an access key. This user identity resolves to a user that has no additional priviliges in Quobyte. 
-Using that storage consumption and storage administration are strictly separated. That is also reflected in using different namespaces in Kubernetes: 
+This separation is done using different sets of credentials: ``` tenantadmin-credentials ``` and ``` tenantuser-accesskey ```.
+The first Kubernetes secret hold a Quobyte username and password. This is used to communicate to the 
+Quobyte API and maintain Quobyte volumes. 
+The second secret holds nothing but an access key. This key is used to mount Quobyte volumes.
+Since an access key in Quobyte always resolves to a tenant, a username and a group we have all informations we 
+need to select the right volume to mount, create or modify files and do proper ACL enforcement.
+
+This way storage consumption and storage administration are strictly separated. That is also reflected in using different namespaces in Kubernetes: 
 The admin user identity is using a dedicated namespace while the access keys can be created/ used in an independent namespace ("default" in this case).
 
 To complete the code examples here are the two different types of secrets:
