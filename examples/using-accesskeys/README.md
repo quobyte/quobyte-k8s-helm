@@ -105,11 +105,13 @@ metadata:
 ### Enable Access Key based storage class
 
 1. Make sure your CSI configuration is configured to enable access keys
+and Quobyte version 3 is chosen.
 
 ```
 quobyte-csi:
   quobyte: 
     enableAccessKeys: true
+    version: 3
 ```
 2. Make sure, that your Client configuration is configured to enable access keys
 ```
