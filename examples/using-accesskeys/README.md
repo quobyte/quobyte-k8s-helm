@@ -113,7 +113,7 @@ quobyte-csi:
     enableAccessKeys: true
     version: 3
 ```
-2. Make sure, that your Client configuration is configured to enable access keys
+2. Make sure that your Client configuration is configured to enable access keys
 ```
 quobyte-client:
   quobyte: 
