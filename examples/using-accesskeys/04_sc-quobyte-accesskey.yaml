@@ -14,10 +14,9 @@ parameters:
 
 # Attributes to create a Quoybte volume with
   createQuota: "true"
-  accessMode: "700"
+  accessMode: "770"
   user: kubernaut 
   group: kubernautees
-  quobyteConfig: BASE
   quobyteTenant: "kubernautees"  
   labels: "usagetype:exploringSpace"
 provisioner: csi.quobyte.com
