@@ -67,7 +67,7 @@ $ helm install <clientDeployment> .
 ## How to update/upgrade a Quobyte cluster
 
 ```
-$ helm upgrade <DeploymentName> . --set-string timestamp=$(date '+%s')`
+$ helm upgrade <DeploymentName> . --set-string timestamp=$(date '+%s')
 ``` 
 This will delete stateful sets backwards and re-create them.
  
