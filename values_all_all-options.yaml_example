@@ -47,7 +47,7 @@ quobyte-core:
     loglevel: warn
     annotation: quobyte.gce-test.quobyte.net.
   quobyte:
-    image: quay.io/quobyte/quobyte-server:3.0.pre
+    image: quay.io/quobyte/quobyte-server:3.0
     lbinternal: false 
     flashStorage: pd-ssd
     storageProvisioner: kubernetes.io/gce-pd
