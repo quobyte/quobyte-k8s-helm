@@ -42,8 +42,10 @@ quobyte:
   # to consume the Quobyte storage!
   
   # Name depends on the cloud environment, e.g. pd-ssd for Google Kubernetes Engine
+  # flashStorage: gp2 # AWS general purpose SSD
   flashStorage: pd-ssd
   # Storage provider depending to the cloud environment
+  # storageProvisioner: kubernetes.io/aws-ebs 
   storageProvisioner: kubernetes.io/gce-pd
   
   # Minimum number of replicas per Quobyte services, minimum is 4.
