@@ -1,13 +1,12 @@
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment 
 metadata:
   name: quobyte-api
 spec:
   selector:
     matchLabels:
       app: quobyte-api # has to match .spec.template.metadata.labels
-  serviceName: "quobyte-api"
   replicas: {{ .Values.quobyte.replicas }} # by default is 4 
   template:
     metadata:
@@ -19,51 +18,6 @@ spec:
       terminationGracePeriodSeconds: 10
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      initContainers:
-      - name: quobyte-api-pre 
-        image: {{ .Values.quobyte.image }}
-        env:
-          - name: NODENAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: MY_POD_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: HOST_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: QUOBYTE_DATA_PORT 
-            value: "7863"
-          - name: QUOBYTE_META_PORT
-            value: "7862"
-          - name: QUOBYTE_REG_PORT 
-            value: "7861"
-          - name: QUOBYTE_API_PORT
-            value: "7860" 
-          - name: QUOBYTE_SERVICE
-            value: api
-          - name: CLOUD_INSTALL
-            value: "1" 
-          - name: CLUSTER_NS
-            value: {{ .Release.Namespace }}
-          - name: LIMIT_OPEN_FILES
-            value: "{{ .Values.quobyte.maxopenfiles }}"
-          - name: LIMIT_MAX_PROCESSES
-            value: "{{ .Values.quobyte.maxprocs }}"
-        volumeMounts:
-          - name: config-api
-            mountPath: /etc/quobyte
-        command:
-              - /bin/sh 
-              - -xc
-              - |
-                touch /etc/quobyte/$QUOBYTE_SERVICE.cfg
-                echo test.device_dir=/var/lib/quobyte/devices >> /etc/quobyte/api.cfg
-                echo rpc.bind.address=${MY_POD_IP} >> /etc/quobyte/api.cfg
-                echo hostname=${HOSTNAME} >> /etc/quobyte/api.cfg
       containers:
       - name: quobyte-api
         image: {{ .Values.quobyte.image }}
@@ -104,9 +58,6 @@ spec:
         ports:
         - containerPort: 7860
           name: quobyteapi
-        volumeMounts:
-          - name: config-api
-            mountPath: /etc/quobyte
       {{- if .Values.nodepoolname }}
       nodeSelector:
            storage-node-pool: {{ .Values.nodepoolname }}
@@ -121,12 +72,3 @@ spec:
                   values:
                   - quobyte
               topologyKey: "kubernetes.io/hostname"
-  volumeClaimTemplates:
-  - metadata:
-      name: config-api
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
-
