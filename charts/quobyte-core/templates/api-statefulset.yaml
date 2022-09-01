@@ -107,8 +107,10 @@ spec:
         volumeMounts:
           - name: config-api
             mountPath: /etc/quobyte
+      {{- if .Values.nodepoolname }}
       nodeSelector:
-           cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
+           storage-node-pool: {{ .Values.nodepoolname }}
+      {{- end }}
       affinity:
         podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

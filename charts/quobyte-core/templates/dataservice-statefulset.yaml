@@ -122,8 +122,10 @@ spec:
           - name: {{ .name }}
             mountPath: {{ .mountpoint }}
           {{- end }}
+      {{- if .Values.nodepoolname }}
       nodeSelector:
-           cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
+           storage-node-pool: {{ .Values.nodepoolname }}
+      {{- end }}
       affinity:
         podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

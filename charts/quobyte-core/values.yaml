@@ -1,10 +1,9 @@
 # Name of the nodepool in which the Quobyte services will be deployed.
-# This must be a dedicated nodepool that is used to run Quobyte services
-# exclusively and have sufficient resources to run all required services.
-# The separate nodepool is required for performance isolation to avoid
+# A separate nodepool can be used for performance isolation to avoid
 # other workloads from impacting your storage.
-# Minimum node pool size is 4 machines.
-nodepoolname: default-pool
+# You can create a nodepool by labeling worker nodes
+# "kubectl label nodes <your-node-name> storage-node-pool=quobyte"
+## nodepoolname: quobyte
 
 # external-dns allows you to use your Quobyte cluster from outside the Kubernetes
 # cluster, e.g. from bare metal machines or VMs or across data centers.

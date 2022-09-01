@@ -116,8 +116,10 @@ spec:
             mountPath: /etc/quobyte
           - name: registry
             mountPath: /var/lib/quobyte/devices/registry
+      {{- if .Values.nodepoolname }}
       nodeSelector:
-           cloud.google.com/gke-nodepool: {{ .Values.nodepoolname }}
+           storage-node-pool: {{ .Values.nodepoolname }}
+      {{- end }}
       affinity:
         podAntiAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
