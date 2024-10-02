@@ -2,7 +2,7 @@
 
 This repository is deprecated, please use
 
-[Quobyte K8s ressources](https://github.com/quobyte/quobyte-k8s-resources)
+[Quobyte K8s resources](https://github.com/quobyte/quobyte-k8s-resources)
 
 instead.
 
